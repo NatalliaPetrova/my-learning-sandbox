@@ -35,7 +35,8 @@ def exchange():
             response2 = requests.get(f'https://open.er-api.com/v6/latest/{base2_code}')
             response2.raise_for_status()
             data2 = response2.json()
-            if target_code in data1['rates'] or target_code in data2['rates']:
+            # Замена or на and, чтобы убедиться, что целевая валюта есть в обоих словарях
+            if target_code in data1['rates'] and target_code in data2['rates']:
                 exchange_rate1 = data1['rates'][target_code]
                 exchange_rate2 = data2['rates'][target_code]
                 base1 = currencies[base1_code]
