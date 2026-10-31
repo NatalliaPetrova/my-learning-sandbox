@@ -35,7 +35,9 @@ def exchange():
             response2 = requests.get(f'https://open.er-api.com/v6/latest/{base2_code}')
             response2.raise_for_status()
             data2 = response2.json()
-            # Замена or на and, чтобы убедиться, что целевая валюта есть в обоих словарях
+            if data1.get('result') != 'success' or data2.get('result') != 'success':
+                mb.showerror("Ошибка", "Не удалось получить курсы валют (сбой API)")
+                return
             if target_code in data1['rates'] and target_code in data2['rates']:
                 exchange_rate1 = data1['rates'][target_code]
                 exchange_rate2 = data2['rates'][target_code]
@@ -74,7 +76,7 @@ window.title("Курс обмена валюты")
 window.geometry("360x360")
 
 Label(text="Базовая валюта 1:").pack(padx=10, pady=5)
-base1_combobox = ttk.Combobox(values=list(currencies.keys()))
+base1_combobox = ttk.Combobox(values=list(currencies.keys()), state="readonly")
 base1_combobox.pack(padx=10, pady=5)
 base1_combobox.bind("<<ComboboxSelected>>", update_base1_label)
 
@@ -82,7 +84,7 @@ base1_label = ttk.Label()
 base1_label.pack(padx=10, pady=10)
 
 Label(text="Базовая валюта 2:").pack(padx=10, pady=5)
-base2_combobox = ttk.Combobox(values=list(currencies.keys()))
+base2_combobox = ttk.Combobox(values=list(currencies.keys()), state="readonly")
 base2_combobox.pack(padx=10, pady=5)
 base2_combobox.bind("<<ComboboxSelected>>", update_base2_label)
 
@@ -90,7 +92,7 @@ base2_label = ttk.Label()
 base2_label.pack(padx=10, pady=10)
 
 Label(text="Целевая валюта:").pack(padx=10, pady=5)
-target_combobox = ttk.Combobox(values=list(currencies.keys()))
+target_combobox = ttk.Combobox(values=list(currencies.keys()), state="readonly")
 target_combobox.pack(padx=10, pady=5)
 target_combobox.bind("<<ComboboxSelected>>", update_target_label)
 
