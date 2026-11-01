@@ -28,7 +28,6 @@ def exchange():
 
     if coin1 and coin2 and coin3:
         try:
-            # ids = ",".join(crypto.keys())
             ids = f"{coin1},{coin2},{coin3}"
             response = requests.get(f'https://api.coingecko.com/api/v3/simple/price?ids={ids}&vs_currencies=usd')
             response.raise_for_status()
