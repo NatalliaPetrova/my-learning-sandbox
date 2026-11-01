@@ -40,10 +40,10 @@ def exchange():
                 name1 = crypto[coin1]
                 name2 = crypto[coin2]
                 name3 = crypto[coin3]
-                mb.showinfo("Курс обмена",
-                    f"Курс 1 {name1}  = {price1:.2f} USD\n"                    
-                            f"Курс 1 {name2} = {price2:.2f} USD\n"
-                            f"Курс 1 {name3} = {price3:.2f} USD")
+                mb.showinfo("Курс криптовалют к USD",
+                    f"1 {name1}  = {price1:.2f} USD\n"                    
+                            f"1 {name2} = {price2:.2f} USD\n"
+                            f"1 {name3} = {price3:.2f} USD")
             else:
                 mb.showerror("Ошибка", "Не удалось получить курс для одной или нескольких выбранных монет.")
         except Exception as e:
