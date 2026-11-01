@@ -24,7 +24,7 @@ crypto = {
 }
 
 ids = ",".join(crypto.keys())
-# проверяю, что API отдает цены для  словаря
+# проверяю, что API отдает цены для словаря
 url_price = (f"https://api.coingecko.com/api/v3/simple/price?ids={ids}&vs_currencies=usd")
 data_price = requests.get(url_price).json()
 p = pprint.PrettyPrinter(indent=4)
