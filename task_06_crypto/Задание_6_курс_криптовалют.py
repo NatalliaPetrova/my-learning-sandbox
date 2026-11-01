@@ -22,7 +22,34 @@ def update_price3_label(event):
 
 
 def exchange():
-    pass
+    coin1 = price1_combobox.get().strip()
+    coin2 = price2_combobox.get().strip()
+    coin3 = price3_combobox.get().strip()
+
+    if coin1 and coin2 and coin3:
+        try:
+            # ids = ",".join(crypto.keys())
+            ids = f"{coin1},{coin2},{coin3}"
+            response = requests.get(f'https://api.coingecko.com/api/v3/simple/price?ids={ids}&vs_currencies=usd')
+            response.raise_for_status()
+            data = response.json()
+            if coin1 in data and coin2 in data and coin3 in data:
+                price1 = data[coin1]['usd']
+                price2 = data[coin2]['usd']
+                price3 = data[coin3]['usd']
+                name1 = crypto[coin1]
+                name2 = crypto[coin2]
+                name3 = crypto[coin3]
+                mb.showinfo("Курс обмена",
+                    f"Курс 1 {name1}  = {price1:.2f} USD\n"                    
+                            f"Курс 1 {name2} = {price2:.2f} USD\n"
+                            f"Курс 1 {name3} = {price3:.2f} USD")
+            else:
+                mb.showerror("Ошибка", "Не удалось получить курс для одной или нескольких выбранных монет.")
+        except Exception as e:
+            mb.showerror("Ошибка", f"Ошибка: {e}")
+    else:
+        mb.showwarning("Внимание", "Выберите криптовалюту")
 
 
 #Словарь топ 10 криптовалют и их полных названий
