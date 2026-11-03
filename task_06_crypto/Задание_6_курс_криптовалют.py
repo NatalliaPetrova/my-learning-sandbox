@@ -4,19 +4,37 @@ from tkinter import messagebox as mb
 import requests
 
 def update_price1_label(event):
-    code = price1_combobox.get()
+    code = price1_combobox.get().strip()
     name = crypto[code]
     price1_label.config(text=name)
 
 
 def update_price2_label(event):
-    code = price2_combobox.get()
+    code = price2_combobox.get().strip()
+    coin1 = price1_combobox.get().strip()
+    # Если выбрана та же монета, что и в первом списке
+    if code == coin1 and code != "":
+        mb.showwarning("Внимание", "Эта монета уже выбрана первой!\n"
+                                   "Пожалуйста, выберите другую монету!")
+        price2_combobox.set('')  # Сбрасываем выбор
+        price2_label.config(text='')  # Стираем название
+        return  # Выходим из функции
+
     name = crypto[code]
     price2_label.config(text=name)
 
 
 def update_price3_label(event):
-    code = price3_combobox.get()
+    code = price3_combobox.get().strip()
+    coin1 = price1_combobox.get().strip()
+    coin2 = price2_combobox.get().strip()
+    if (code == coin1 or code == coin2) and code != "":
+        mb.showwarning("Внимание", "Эта монета уже выбрана ранее!\n"
+                                   " Пожалуйста, выберите другую монету!")
+        price3_combobox.set('')  # Сбрасываем выбор
+        price3_label.config(text='')  # Стираем название
+        return  # Выходим из функции
+
     name = crypto[code]
     price3_label.config(text=name)
 
@@ -40,7 +58,7 @@ def exchange():
                 name2 = crypto[coin2]
                 name3 = crypto[coin3]
                 mb.showinfo("Курс криптовалют к USD",
-                    f"1 {name1}  = {price1:.2f} USD\n"                    
+                    f"1 {name1}  = {price1:.2f} USD\n"
                             f"1 {name2} = {price2:.2f} USD\n"
                             f"1 {name3} = {price3:.2f} USD")
             else:
